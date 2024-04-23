@@ -1,7 +1,10 @@
-package com.example.lab04;
+package com.example.lab04.Exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class FaultController {
@@ -10,7 +13,7 @@ public class FaultController {
     @ExceptionHandler(PersonNotFoundEx.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     String handlePersonNotFound(PersonNotFoundEx e) {
-        return HttpStatus.NOT_FOUND + " - The person with ID " + e.getMessage() + " does not exist";
+        return HttpStatus.NOT_FOUND + " - " + e.getMessage();
     }
 
     @ResponseBody
@@ -20,4 +23,3 @@ public class FaultController {
         return HttpStatus.BAD_REQUEST + " - " + e.getMessage();
     }
 }
-
