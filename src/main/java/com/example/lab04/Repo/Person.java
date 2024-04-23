@@ -1,15 +1,23 @@
-package com.example.lab04;
+package com.example.lab04.Repo;
 
 public class Person {
     private int id;
     private String name;
     private int age;
 
+    private PersonStatus status;
 
-    public Person(int id, String name, int age) {
+    public enum PersonStatus{
+        NOT_HIRED,
+        HIRED
+    }
+
+
+    public Person(int id, String name, int age, PersonStatus status) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.status = status;
     }
 
     public int getId() {
@@ -34,5 +42,12 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+    public PersonStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PersonStatus status) {
+        this.status = status;
     }
 }

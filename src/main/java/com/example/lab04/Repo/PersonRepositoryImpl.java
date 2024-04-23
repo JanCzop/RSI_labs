@@ -1,8 +1,8 @@
 package com.example.lab04.Repo;
 
-import com.example.lab04.Exceptions.BadRequestEx;
+import com.example.lab04.Exceptions.PersonExistsEx;
 import com.example.lab04.Exceptions.PersonNotFoundEx;
-import com.example.lab04.Person;
+import com.example.lab04.Exceptions.StatusEx;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,9 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     public PersonRepositoryImpl() {
         personList = new ArrayList<>();
-        personList.add(new Person(1, "John", 30));
-        personList.add(new Person(2, "Alice", 25));
-        personList.add(new Person(3, "Bob", 40));
+        personList.add(new Person(1, "John", 30, Person.PersonStatus.NOT_HIRED));
+        personList.add(new Person(2, "Alice", 25, Person.PersonStatus.HIRED));
+        personList.add(new Person(3, "Bob", 40, Person.PersonStatus.NOT_HIRED));
     }
     @Override
     public List<Person> getAllPersons() {
@@ -31,11 +31,11 @@ public class PersonRepositoryImpl implements PersonRepository{
     }
 
     @Override
-    public Person updatePerson(int id, Person person) throws PersonNotFoundEx, BadRequestEx {
+    public Person updatePerson(int id, Person person) throws PersonNotFoundEx, PersonExistsEx {
         boolean exists = false;
         int searched_id = 0;
         for (int i = 0; i < personList.size(); i++) {
-            if(personList.get(i).getId() == person.getId()) throw new BadRequestEx("Cannot update: " + person.getId() + " - there is somebody with this id");
+            if(personList.get(i).getId() == person.getId()) throw new PersonExistsEx("Cannot update: " + person.getId() + " - there is somebody with this id");
             if(personList.get(i).getId() == id) {
                 exists = true;
                 searched_id = i;
@@ -60,9 +60,9 @@ public class PersonRepositoryImpl implements PersonRepository{
     }
 
     @Override
-    public Person addPerson(Person person) throws BadRequestEx {
+    public Person addPerson(Person person) throws PersonExistsEx {
         for(Person p :personList){
-            if(p.getId() == person.getId()) throw new BadRequestEx("Cannot add: " + person.getId() + " - there is somebody with this id");
+            if(p.getId() == person.getId()) throw new PersonExistsEx("Cannot add: " + person.getId() + " - there is somebody with this id");
         }
         personList.add(person);
         return person;
@@ -71,5 +71,33 @@ public class PersonRepositoryImpl implements PersonRepository{
     @Override
     public int countPersons() {
         return personList.size();
+    }
+
+    @Override
+    public Person hirePerson(int id) throws PersonNotFoundEx, StatusEx{
+        for(Person p:personList){
+            if(p.getId() == id){
+                if (p.getStatus() == Person.PersonStatus.NOT_HIRED) {
+                    p.setStatus(Person.PersonStatus.HIRED);
+                    return p;
+                }
+                else throw new StatusEx(p.getStatus());
+            }
+        }
+        throw new PersonNotFoundEx(id);
+    }
+
+    @Override
+    public Person firePerson(int id) throws PersonNotFoundEx, StatusEx{
+        for(Person p:personList){
+            if(p.getId() == id){
+                if (p.getStatus() == Person.PersonStatus.HIRED) {
+                    p.setStatus(Person.PersonStatus.NOT_HIRED);
+                    return p;
+                }
+                else throw new StatusEx(p.getStatus());
+            }
+        }
+        throw new PersonNotFoundEx(id);
     }
 }
