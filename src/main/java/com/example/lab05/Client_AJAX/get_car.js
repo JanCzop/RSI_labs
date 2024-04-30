@@ -1,7 +1,6 @@
-// get_car.js
 
-// Funkcja do pobierania danych o samochodzie o podanym ID
-function getCar(id) {
+function getCar() {
+    const id = document.getElementById('carId').value;
     fetch(`http://localhost:8080/cars/${id}`)
         .then(response => {
             if (!response.ok) {
@@ -10,7 +9,6 @@ function getCar(id) {
             return response.json();
         })
         .then(car => {
-            // Wywołanie funkcji do wygenerowania wiersza tabeli z danymi o samochodzie
             generateTableRow(car);
         })
         .catch(error => {
@@ -22,21 +20,4 @@ function getCar(id) {
         });
 }
 
-// Funkcja do generowania wiersza tabeli z danymi o samochodzie
-function generateTableRow(car) {
-    var tbody = document.querySelector('#carTableBody');
-    if (!tbody) {
-        console.error('Table body element not found.');
-        return;
-    }
 
-    var row = '<tr>';
-    row += '<td>' + car.id + '</td>';
-    row += '<td>' + car.model + '</td>';
-    row += '<td>' + car.brand + '</td>';
-    row += '<td>' + car.production_year + '</td>';
-    row += '<td>' + car.status + '</td>';
-    row += '</tr>';
-
-    tbody.innerHTML = row;
-}

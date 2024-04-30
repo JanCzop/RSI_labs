@@ -18,32 +18,16 @@ function updateFields() {
 
     document.getElementById('carId').style.display = 'block';
 
-    const oldIdField = document.getElementById('oldCarId');
-    if (oldIdField) {
-        oldIdField.style.display = currentAction === 'UPDATE' ? 'block' : 'none';
-    } else if (currentAction === 'UPDATE') {
-        const carForm = document.getElementById('carForm');
-
-        const oldIdField = document.createElement('input');
-        oldIdField.type = 'number';
-        oldIdField.id = 'oldCarId';
-        oldIdField.name = 'oldCarId';
-        oldIdField.placeholder = 'Old ID';
-        carForm.insertBefore(oldIdField, document.getElementById('carId'));
-    }
 }
 
 function saveChanges() {
-    if (currentAction === 'CREATE') {
-        // Do something for create action
-    } else if (currentAction === 'UPDATE') {
-        // Do something for update action
-    } else if (currentAction === 'READ') {
-        const id = document.getElementById('carId').value;
-        getCar(id);
-    } else {
-        console.warn('No action specified for Save button.');
-    }
+    if (currentAction === 'CREATE') createCar();
+    else if (currentAction === 'UPDATE') updateCar();
+     else if (currentAction === 'READ') getCar();
+    else if (currentAction === 'DELETE') deleteCar();
+    else if (currentAction === 'REPAIR') repairCar();
+    else if (currentAction === 'DAMAGE') damageCar();
+    else console.warn('No action specified for Save button.');
 }
 
 function updateMessages(message,isError) {

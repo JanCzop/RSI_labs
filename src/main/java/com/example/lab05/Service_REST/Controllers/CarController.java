@@ -44,12 +44,12 @@ public class CarController {
     }
 
     @PatchMapping("/cars/{id}/damage")
-    public Car damage_car(@RequestBody Car car) {
-        return data.damage_car(car);
+    public Car damage_car(@PathVariable int id) {
+        return data.damage_car(id);
     }
 
     @PatchMapping("/cars/{id}/repair")
-    public Car repair_car(@RequestBody Car car) {
-        return data.repair_car(car);
+    public Car repair_car(@PathVariable int id) {
+        return data.repair_car(id);
     }
 }
