@@ -1,25 +1,23 @@
 function deleteCar() {
-    const carId = document.getElementById('carId').value;
+    const carId = $('#carId').val();
 
-    fetch(`http://localhost:8080/cars/${carId}`, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (response.ok) {
-                updateMessages(`Car with ID ${carId} deleted successfully`, false);
-                if(!listed) {fetchAndGenerateTable();}
-                else toggleListButton();
-            } else if (response.status === 404) {
-                updateMessages(`Car with ID ${carId} not found`, true);
+    $.ajax({
+        url: `http://localhost:8080/cars/${carId}`,
+        type: 'DELETE',
+        success: function() {
+            updateMessages(`Car with ID ${carId} deleted successfully`, false);
+            if (!listed) {
+                fetchAndGenerateTable();
             } else {
-                throw new Error('Network response was not ok');
+                toggleListButton();
             }
-        })
-        .catch(error => {
-            if (error.message === 'Network response was not ok') {
-                updateMessages(`Error deleting car with ID ${carId}`, true);
+        },
+        error: function(xhr, status, error) {
+            if (xhr.status === 404) {
+                updateMessages(`Car with ID ${carId} not found`, true);
             } else {
                 console.error('Error deleting car:', error);
             }
-        });
+        }
+    });
 }

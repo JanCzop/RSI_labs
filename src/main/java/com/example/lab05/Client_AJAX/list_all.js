@@ -1,17 +1,17 @@
 function removeTable() {
-    const table = document.getElementById('carTableBody');
-    if (table) {
-        table.innerHTML = ''; // Usuwamy zawartość tabeli
+    const tbody = $('#carTableBody');
+    if (tbody.length) {
+        tbody.empty(); // Usuwamy zawartość tabeli
     }
 }
 
 function generateTableRows(cars) {
-    const tbody = document.querySelector('#carTableBody');
-    if (!tbody) {
+    const tbody = $('#carTableBody');
+    if (!tbody.length) {
         console.error('Table body element not found.');
         return;
     }
-    tbody.innerHTML = '';
+    tbody.empty();
 
     cars.forEach(function(car) {
         let row = '<tr>';
@@ -21,24 +21,31 @@ function generateTableRows(cars) {
         row += '<td>' + car.production_year + '</td>';
         row += '<td>' + car.status + '</td>';
         row += '</tr>';
-        tbody.innerHTML += row;
+        tbody.append(row);
     });
 }
 
 function fetchAndGenerateTable() {
-    fetch('http://localhost:8080/cars')
-        .then(response => response.json())
-        .then(data => generateTableRows(data))
-        .catch(error => console.error('Error fetching data:', error));
+    $.ajax({
+        url: 'http://localhost:8080/cars',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            generateTableRows(data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
+    });
 }
 
 function toggleListButton() {
-    const listButton = document.getElementById('listButton');
+    const listButton = $('#listButton');
     if (listed) {
-        listButton.textContent = 'Hide Cars';
+        listButton.text('Hide Cars');
         fetchAndGenerateTable();
     } else {
-        listButton.textContent = 'List All Cars';
+        listButton.text('List All Cars');
         removeTable();
     }
     listed = !listed;

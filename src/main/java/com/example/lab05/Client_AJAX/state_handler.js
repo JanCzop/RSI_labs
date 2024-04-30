@@ -1,10 +1,13 @@
 let currentAction = 'READ';
 let listed = true;
+let selectedButtonId = null;
 
 function setAction(action) {
     currentAction = action;
     updateFields();
+
 }
+
 
 function updateFields() {
     const fields = document.querySelectorAll('#carForm input, #carForm select');
@@ -37,7 +40,7 @@ function updateMessages(message,isError) {
         return;
     }
     messagesSection.textContent = message;
-    messagesSection.style.color = isError ? 'red' : 'black';
+    messagesSection.style.color = isError ? 'red' : 'green';
 }
 
 

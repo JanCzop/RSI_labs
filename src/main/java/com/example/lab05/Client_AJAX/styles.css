@@ -54,3 +54,11 @@ carTable {
     font-size: 24px;
 }
 
+
+.disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none; /* Wyłącza obsługę zdarzeń dla przycisku */
+}
+
+

@@ -1,14 +1,17 @@
 function damageCar() {
-    const carId = document.getElementById('carId').value;
+    const carId = $('#carId').val();
 
-    fetch(`http://localhost:8080/cars/${carId}/damage`, {
-        method: 'PATCH'
-    })
-        .then(response => {
+    $.ajax({
+        url: `http://localhost:8080/cars/${carId}/damage`,
+        type: 'PATCH',
+        success: function(response) {
             if (response.ok) {
                 updateMessages(`Car with ID ${carId} damaged successfully`, false);
-                if(!listed) {fetchAndGenerateTable();}
-                else toggleListButton();
+                if (!listed) {
+                    fetchAndGenerateTable();
+                } else {
+                    toggleListButton();
+                }
             } else if (response.status === 409) {
                 updateMessages(`Car with ID ${carId} cannot be damaged because it is already damaged`, true);
             } else if (response.status === 404) {
@@ -16,12 +19,13 @@ function damageCar() {
             } else {
                 throw new Error('Network response was not ok');
             }
-        })
-        .catch(error => {
+        },
+        error: function(xhr, status, error) {
             if (error.message === 'Network response was not ok') {
                 updateMessages(`Error damaging car with ID ${carId}`, true);
             } else {
                 console.error('Error damaging car:', error);
             }
-        });
+        }
+    });
 }
