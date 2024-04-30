@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Management</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<div class="messages" id="messagesSection">Komunikaty:</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="column">
+      <button type="button" onclick="setAction('READ')">Read Car</button>
+      <button type="button" onclick="setAction('CREATE')">Create Car</button>
+      <button type="button" onclick="setAction('UPDATE')">Update Car</button>
+      <button type="button" onclick="setAction('DELETE')">Delete Car</button>
+      <button type="button" onclick="setAction('DAMAGE')">Damage Car</button>
+      <button type="button" onclick="setAction('REPAIR')">Repair Car</button>
+    </div>
+  </div>
+
+  <br><br>
+
+  <form id="carForm">
+    <input type="number" id="carId" name="carId" required placeholder="ID">
+    <input type="text" id="carModel" name="carModel" required placeholder="Model">
+    <input type="text" id="carBrand" name="carBrand" required placeholder="Brand">
+    <input type="number" id="carProductionYear" name="carProductionYear" required placeholder="Production Year">
+    <select id="carStatus" name="carStatus" required>
+      <option value="DAMAGED">Damaged</option>
+      <option value="UNDAMAGED">Undamaged</option>
+      <br><br>
+    </select>
+  </form>
+  <button type="button" onclick="saveChanges()">Save Changes</button>
+  <div class="row">
+    <div class="column">
+      <button type="button" onclick="toggleListButton()" id="listButton">List All Cars</button>
+    </div>
+    <br>
+  </div>
+
+
+  <table id="carTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Model</th>
+      <th>Brand</th>
+      <th>Production Year</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="carTableBody">
+    </tbody>
+  </table>
+</div>
+
+<br><br><br>
+
+<script src="state_handler.js"></script>
+<script src="list_all.js"></script>
+<script src="get_car.js"></script>
+<script src="generate_table_row.js"></script>
+<script src="create_car.js"></script>
+<script src="delete_car.js"></script>
+<script src="repair_car.js"></script>
+<script src="damage_car.js"></script>
+<script src="update_car.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+</body>
+</html>
