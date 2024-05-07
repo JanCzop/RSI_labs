@@ -1,5 +1,4 @@
-function repairCar() {
-    const carId = $('#carId').val();
+function repairCar(carId) {
 
     $.ajax({
         url: `http://localhost:8080/cars/${carId}/repair`,

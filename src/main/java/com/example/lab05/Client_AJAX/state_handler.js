@@ -28,8 +28,8 @@ function saveChanges() {
     else if (currentAction === 'UPDATE') updateCar();
      else if (currentAction === 'READ') getCar();
     else if (currentAction === 'DELETE') deleteCar();
-    else if (currentAction === 'REPAIR') repairCar();
-    else if (currentAction === 'DAMAGE') damageCar();
+    else if (currentAction === 'REPAIR') repairCar($('#carId').val());
+    else if (currentAction === 'DAMAGE') damageCar($('#carId').val());
     else console.warn('No action specified for Save button.');
 }
 
